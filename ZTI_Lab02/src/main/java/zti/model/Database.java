@@ -23,9 +23,9 @@ public class Database {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-        String url = "jdbc:postgresql://localhost:5432/postgres";
-        String username = "postgres";
-        String password = "postgres";
+        String url = "jdbc:postgresql://pascal.fis.agh.edu.pl:5432/u2rusin";
+        String username = "u2rusin";
+        String password = "2rusin";
         try {
             conn = DriverManager.getConnection(url, username, password);
         } catch (SQLException ex) {

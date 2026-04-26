@@ -2,9 +2,9 @@
 <resources>
     <Resource id="jdbc/postgres" type="javax.sql.DataSource">
         JdbcDriver = org.postgresql.Driver
-        JdbcUrl = jdbc:postgresql://localhost:5432/postgres
-        UserName = postgres
-        Password = postgres
+        JdbcUrl = jdbc:postgresql://pascal.fis.agh.edu.pl:5432/u2rusin
+        UserName = u2rusin
+        Password = 2rusin
         JtaManaged = false
         initialSize = 2
         maxActive = 2
