@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+<head><title>IGNORED</title></head>
+<body>
+<ui:composition template="/templates/masterTemplate.xhtml">
+    <ui:define name="content">
+        <h3>#{msg.addPersonTitle}</h3>
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputLabel value="#{msg.Firstname}:"/>
+                <h:inputText value="#{servJPABean.addPerson.fname}" required="true"/>
+
+                <h:outputLabel value="#{msg.Lastname}:"/>
+                <h:inputText value="#{servJPABean.addPerson.lname}" required="true"/>
+
+                <h:outputLabel value="#{msg.City}:"/>
+                <h:inputText value="#{servJPABean.addPerson.city}"/>
+
+                <h:outputLabel value="#{msg.Email}:"/>
+                <h:inputText value="#{servJPABean.addPerson.email}">
+                    <f:validateRegex pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"/>
+                </h:inputText>
+
+                <h:outputLabel value="#{msg.Tel}:"/>
+                <h:inputText value="#{servJPABean.addPerson.tel}"/>
+            </h:panelGrid>
+            <h:commandButton value="#{msg.BtnSave}" action="#{servJPABean.savePerson()}"/>
+            <h:messages style="color:red"/>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</body>
+</html>

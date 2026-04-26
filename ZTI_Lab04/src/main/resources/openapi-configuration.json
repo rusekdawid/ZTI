@@ -1,0 +1,11 @@
+{
+  "resourcePackages": ["zti.lab04"],
+  "prettyPrint": true,
+  "openAPI": {
+    "info": {
+      "title": "ZTI Lab04 REST API",
+      "version": "1.0",
+      "description": "JAX-RS REST API with JDBC and JPA resources"
+    }
+  }
+}

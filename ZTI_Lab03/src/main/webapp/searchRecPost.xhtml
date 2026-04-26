@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+<head><title>IGNORED</title></head>
+<body>
+<ui:composition template="/templates/masterTemplate.xhtml">
+    <ui:define name="content">
+        <h3>#{msg.searchTitle}</h3>
+        <h:form>
+            <h:outputLabel value="#{msg.searchLabel}:"/>
+            <h:inputText value="#{servJPABean.searchQuery}"/>
+            <h:commandButton value="#{msg.BtnSearch}" action="#{servJPABean.search()}"/>
+        </h:form>
+        <h:form>
+            <h:dataTable value="#{servJPABean.searchResults}" var="record1" border="1"
+                         rendered="#{not empty servJPABean.searchResults}">
+                <h:column>
+                    <f:facet name="header"><h:outputText value="#{msg.Lastname}"/></f:facet>
+                    <h:outputText value="#{record1.lname}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="#{msg.Firstname}"/></f:facet>
+                    <h:outputText value="#{record1.fname}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="#{msg.Email}"/></f:facet>
+                    <h:outputText value="#{record1.email}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="#{msg.City}"/></f:facet>
+                    <h:outputText value="#{record1.city}"/>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</body>
+</html>

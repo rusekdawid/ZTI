@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>REST Client - ZTI Lab04</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h2 { color: #2c5282; }
+        h3 { color: #4472c4; border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background: #4472c4; color: white; }
+        tr:nth-child(even) { background: #f2f6ff; }
+        button { margin: 4px; padding: 7px 14px; cursor: pointer; background: #4472c4; color: white; border: none; border-radius: 3px; }
+        button:hover { background: #2c5282; }
+        button.danger { background: #c53030; }
+        button.danger:hover { background: #9b2c2c; }
+        #addForm { display:none; margin-top:10px; border:1px solid #ccc; padding:15px; background:#f9f9f9; max-width:400px; }
+        #addForm input { display:block; width:100%; margin-bottom:8px; padding:6px; box-sizing:border-box; }
+        #result { margin-top: 20px; }
+        #msg { margin-top:10px; color:#2c7a4b; font-weight:bold; }
+    </style>
+</head>
+<body>
+    <h2>ZTI Lab04 - REST Client</h2>
+
+    <h3>JDBC Resource</h3>
+    <button onclick="_list('jdbc')">List All (JDBC)</button>
+    <button onclick="_ins_form()">Add Record</button>
+
+    <h3>JPA Resource</h3>
+    <button onclick="_list('jpa')">List All (JPA)</button>
+
+    <div id="addForm">
+        <h4>Add New Person</h4>
+        <input type="text" id="fname" placeholder="First name">
+        <input type="text" id="lname" placeholder="Last name">
+        <input type="text" id="email" placeholder="Email">
+        <input type="text" id="city" placeholder="City">
+        <input type="text" id="tel" placeholder="Phone">
+        <button onclick="_add()">Save</button>
+        <button onclick="document.getElementById('addForm').style.display='none'">Cancel</button>
+    </div>
+
+    <div id="msg"></div>
+    <div id="result"></div>
+
+    <script>
+        const BASE = 'api/';
+
+        function _list(type) {
+            fetch(BASE + type + '/person/')
+                .then(r => r.json())
+                .then(data => {
+                    let html = '<h4>Persons (' + type.toUpperCase() + ') — ' + data.length + ' records</h4>';
+                    html += '<table><tr><th>ID</th><th>First</th><th>Last</th><th>Email</th><th>City</th><th>Tel</th><th>Type</th><th>Actions</th></tr>';
+                    data.forEach(p => {
+                        html += `<tr>
+                            <td>${p.id}</td>
+                            <td>${p.fname ?? ''}</td>
+                            <td>${p.lname ?? ''}</td>
+                            <td>${p.email ?? ''}</td>
+                            <td>${p.city ?? ''}</td>
+                            <td>${p.tel ?? ''}</td>
+                            <td>${p.type ?? ''}</td>
+                            <td><button class="danger" onclick="_del(${p.id}, '${type}')">Delete</button></td>
+                        </tr>`;
+                    });
+                    html += '</table>';
+                    document.getElementById('result').innerHTML = html;
+                })
+                .catch(e => setMsg('Error: ' + e, true));
+        }
+
+        function _ins_form() {
+            document.getElementById('addForm').style.display = 'block';
+        }
+
+        function _add() {
+            const person = {
+                fname: document.getElementById('fname').value,
+                lname: document.getElementById('lname').value,
+                email: document.getElementById('email').value,
+                city:  document.getElementById('city').value,
+                tel:   document.getElementById('tel').value
+            };
+            fetch(BASE + 'jdbc/person/', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(person)
+            })
+            .then(r => r.text())
+            .then(msg => {
+                setMsg(msg);
+                document.getElementById('addForm').style.display = 'none';
+                _list('jdbc');
+            })
+            .catch(e => setMsg('Error: ' + e, true));
+        }
+
+        function _del_list() {
+            const id = prompt('Enter ID to delete:');
+            if (id) _del(parseInt(id), 'jdbc');
+        }
+
+        function _upd_list() {
+            const id = prompt('Enter ID to update:');
+            if (!id) return;
+            fetch(BASE + 'jdbc/person/' + id)
+                .then(r => r.json())
+                .then(p => {
+                    document.getElementById('fname').value = p.fname ?? '';
+                    document.getElementById('lname').value = p.lname ?? '';
+                    document.getElementById('email').value = p.email ?? '';
+                    document.getElementById('city').value  = p.city  ?? '';
+                    document.getElementById('tel').value   = p.tel   ?? '';
+                    document.getElementById('addForm').style.display = 'block';
+                    document.querySelector('#addForm button').onclick = () => _update(parseInt(id));
+                });
+        }
+
+        function _update(id) {
+            const person = {
+                id:    id,
+                fname: document.getElementById('fname').value,
+                lname: document.getElementById('lname').value,
+                email: document.getElementById('email').value,
+                city:  document.getElementById('city').value,
+                tel:   document.getElementById('tel').value
+            };
+            fetch(BASE + 'jdbc/person/', {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(person)
+            })
+            .then(r => r.text())
+            .then(msg => {
+                setMsg(msg);
+                document.getElementById('addForm').style.display = 'none';
+                _list('jdbc');
+            });
+        }
+
+        function _del(id, type) {
+            if (!confirm('Delete record ' + id + '?')) return;
+            fetch(BASE + type + '/person/' + id, { method: 'DELETE' })
+                .then(r => r.text())
+                .then(msg => {
+                    setMsg(msg);
+                    _list(type);
+                });
+        }
+
+        function setMsg(text, isError) {
+            const el = document.getElementById('msg');
+            el.style.color = isError ? '#c53030' : '#2c7a4b';
+            el.textContent = text;
+        }
+    </script>
+</body>
+</html>

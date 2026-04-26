@@ -1,0 +1,79 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+#header-inner {
+    background-color: #003366;
+    color: white;
+    padding: 10px 20px;
+}
+
+#header-inner h1 {
+    margin: 5px 0;
+    font-size: 1.5em;
+}
+
+#header-inner select {
+    float: right;
+    margin-top: 5px;
+}
+
+#content {
+    padding: 20px;
+    background-color: white;
+    min-height: 400px;
+}
+
+.footer {
+    background-color: #003366;
+    color: white;
+    text-align: center;
+    padding: 8px;
+    font-size: 0.9em;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    background-color: #003366;
+    color: white;
+    padding: 8px;
+}
+
+td {
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+}
+
+tr:nth-child(even) {
+    background-color: #f0f5ff;
+}
+
+input[type="text"], select {
+    padding: 4px 8px;
+    margin: 3px;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+}
+
+input[type="submit"], button {
+    padding: 5px 12px;
+    margin: 3px;
+    background-color: #003366;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+input[type="submit"]:hover, button:hover {
+    background-color: #0055aa;
+}
+
+a { color: #003366; }

@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+<head><title>IGNORED</title></head>
+<body>
+<ui:composition template="/templates/masterTemplate.xhtml">
+    <ui:define name="content">
+        <h3>#{msg.viewPersonTitle}</h3>
+        <h:panelGrid columns="2" border="1">
+            <h:outputText value="#{msg.Id}:"/>
+            <h:outputText value="#{servJPABean.viewPerson.id}"/>
+            <h:outputText value="#{msg.Firstname}:"/>
+            <h:outputText value="#{servJPABean.viewPerson.fname}"/>
+            <h:outputText value="#{msg.Lastname}:"/>
+            <h:outputText value="#{servJPABean.viewPerson.lname}"/>
+            <h:outputText value="#{msg.City}:"/>
+            <h:outputText value="#{servJPABean.viewPerson.city}"/>
+            <h:outputText value="#{msg.Email}:"/>
+            <h:outputText value="#{servJPABean.viewPerson.email}"/>
+            <h:outputText value="#{msg.Tel}:"/>
+            <h:outputText value="#{servJPABean.viewPerson.tel}"/>
+        </h:panelGrid>
+        <h:form>
+            <h:commandButton value="#{msg.BtnBack}" action="allRecPost"/>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</body>
+</html>
