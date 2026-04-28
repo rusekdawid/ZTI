@@ -16,9 +16,9 @@
         </h:form>
         <h1>#{msg.applTitle}</h1>
         <h:form>
-            <h:commandButton value="#{msg.linkHome}" id="home" action="index"/>
-            <h:commandButton value="#{msg.linkList}" id="list" action="list"/>
-            <h:commandButton value="#{msg.linkAdd}"  id="add"  action="add"/>
+            <h:commandButton value="#{msg.linkHome}" id="home" action="index?faces-redirect=true"/>
+            <h:commandButton value="#{msg.linkList}" id="list" action="list?faces-redirect=true"/>
+            <h:commandButton value="#{msg.linkAdd}"  id="add"  action="add?faces-redirect=true"/>
         </h:form>
     </div>
 </ui:composition>

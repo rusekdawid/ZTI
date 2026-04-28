@@ -16,7 +16,12 @@ public class LocaleChanger implements Serializable {
 
     @PostConstruct
     public void init() {
-        locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        if (ctx != null) {
+            locale = ctx.getExternalContext().getRequestLocale();
+        } else {
+            locale = new Locale("pl");
+        }
     }
 
     public Locale getLocale() { return locale; }
